@@ -1,25 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 
 
-namespace TicTacToe1._1
+namespace TicTacToe1
 {
-    class Program
+    public class Program
     {
         //variables
-        static string[] cas = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-        static string Turno, TurnoLetra, player1, player2, turn = "1", input;
-        static bool playing = true, win = false, cpumode;
-        static int Player1Wins, Player2Wins;
+        public static string[] cas = { "0", "o", "2", "o", "4", "5", "6", "7", "8", "9" };
+        public static string Turno, TurnoLetra, player1, player2, turn = "1", input;
+        public static bool playing = true, win = false, cpumode;
+        public static int Player1Wins, Player2Wins;
+        public static bool allcorner;
+
 
         //metodo
 
+            static void botmove()
+        {
+            if (allcorner == false)
+            {
+                BotCornerMove(); 
+                    
+            }
+          
+
+
+        }
         static void Reset()
         {
+
+           
             for (int i = 1; i < cas.Length; i++)
             {
                 cas[i] = Convert.ToString(i);
@@ -29,6 +40,156 @@ namespace TicTacToe1._1
             turn = "1";
             Console.Clear();
             Tablero();
+        }
+      
+
+        static string lockforwinbot(string k)
+        {
+            //horizontales
+
+            //primera linea
+            if (cas[1] == "o" && cas[2] == cas[1] && cas[3] == "3")
+            {
+                return "3";
+            }
+            if (cas[3] == "o" && cas[2] == cas[3] && cas[1] == "1")
+            {
+                return "1";
+            }
+            if (cas[3] == "o" && cas[3] == cas[1] && cas[2] == "2")
+            {
+                return "2";
+            }
+            //segunda linea
+
+            else if (cas[4] == "o" && cas[5] == cas[4] && cas[6] == "6")
+            {
+                return "6";
+            }
+            else if (cas[6] == "o" && cas[5] == cas[6] && cas[4] == "4")
+            {
+                return "4";
+            }
+            else if (cas[4] == "o" && cas[6] == cas[4] && cas[5] == "5")
+            {
+                return "5";
+            }
+
+
+
+            //tercera linea
+            else if (cas[7] == "o" && cas[8] == cas[7] && cas[9] == "9")
+            {
+                return "9";
+            }
+            else if (cas[9] == "o" && cas[8] == cas[9] && cas[7] == "7")
+            {
+                return "7";
+            }
+            else if (cas[9] == "o" && cas[9] == cas[7] && cas[8] == "8")
+            {
+                return "8";
+            }
+
+            //verticales
+            //primera linea
+
+            else if (cas[1] == "o" && cas[4] == cas[1] && cas[7] == "7")
+            {
+                return "7";
+            }
+            else if (cas[7] == "o" && cas[4] == cas[7] && cas[1] == "1")
+            {
+                return "1";
+            }
+            else if (cas[1] == "o" && cas[7] == cas[1] && cas[4] == "4")
+            {
+                return "4";
+            }
+            //segunda linea
+
+            else if (cas[2] == "o" && cas[5] == cas[2] && cas[8] == "8")
+            {
+                return "8";
+            }
+
+            //tercera linea
+            else if (cas[3] == "o" && cas[6] == cas[3] && cas[9] == "9")
+            {
+                return "9";
+            }
+
+
+            //diagonales
+            //primera
+            else if (cas[1] == "o" && cas[5] == cas[1] && cas[9] == "9")
+            {
+                return "9";
+            }
+
+            //segunda
+            else if (cas[3] == "o" && cas[5] == cas[3] && cas[7] == "7")
+            {
+                return "7";
+            }
+            return k;
+
+        }
+
+       public static void BotCornerMove()
+        {
+            
+            if (cas[1] == "1")
+            {
+                cas[1] = "o";
+                turn = "1";
+                Console.Clear();
+                Tablero();
+            }
+                else if (cas[3] == "3")
+                {
+                    cas[3] = "o";
+                    turn = "1";
+                    Console.Clear();
+                    Tablero();
+                    
+                }
+                else if (cas[7] == "7")
+                {
+                    cas[7] = "o";
+                    turn = "1";
+                    Console.Clear();
+                    Tablero();
+                }
+                else if (cas[9] == "9")
+                {
+                    cas[9] = "o";
+                    turn = "1";
+                    Console.Clear();
+                    Tablero();
+                }
+            else
+            {
+
+                bool allcorner = true;
+            }
+        }
+     
+        static void BotOpenMove()
+        {
+
+            for (int i = 1; i < cas.Length; i++)
+            {
+                string n = Convert.ToString(i);
+                if (cas[i] == n)
+                {
+                    cas[i] = "o";
+                    turn = "1";
+                    Console.Clear();
+                    Tablero();
+                    break;
+                }
+            }
         }
 
 
@@ -65,38 +226,61 @@ namespace TicTacToe1._1
                     int inputnum = Convert.ToInt32(input);
                     if (cas[inputnum] == input)
                     {
-                        if (turn == "1")
+                        if (cpumode == true)
                         {
-                            cas[inputnum] = "x";
-                            turn = "2"; ;
-                            Console.Clear();
-                            Tablero();
+                            if (turn == "1")
+                            {
+                                cas[inputnum] = "x";
+                                turn = "2"; ;
+                                Console.Clear();
+                                Tablero();
+                            }
+                            if (turn == "2")
+                            {
+                                {
+                                    
+                                    turn = "1";
+                                    Console.Clear();
+                                    Tablero();
+
+                                }
+                            }
                         }
                         else
                         {
-                            cas[inputnum] = "o";
-                            turn = "1";
-                            Console.Clear();
-                            Tablero();
+                            if (turn == "1")
+                            {
+                                cas[inputnum] = "x";
+                                turn = "2"; ;
+                                Console.Clear();
+                                Tablero();
+                            }
+                            else if (turn == "2")
+                            {
+                                {
+                                    cas[inputnum] = "o";
+                                    turn = "1";
+                                    Console.Clear();
+                                    Tablero();
+
+                                }
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Esta Casilla ya esta tomada.");
+                            }
 
                         }
-
                     }
-                    else
-                    {
-                        Console.WriteLine("Esta Casilla ya esta tomada.");
-                    }
+                     
 
 
                 }
-            }
-
-
-        }
 
 
 
-
+            }   }   
 
         static void empate()
         {
@@ -287,6 +471,13 @@ namespace TicTacToe1._1
 
                 Console.WriteLine("¿Cual es el nombre del Jugador Uno?");
                 player1 = Console.ReadLine();
+                Console.WriteLine("Recuerda que para cerrar el juego debes poner \"quit\"");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Preciona una tecla para continuar.");
+                Console.ReadKey();
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Clear();
+                Tablero();
 
             }
             else
@@ -355,10 +546,12 @@ namespace TicTacToe1._1
             do
             {
                 checkInput();
+
                 CheckWin();
                 win = CheckWin();
                 empate();
                 Winner();
+
             } while (true);
 
 
