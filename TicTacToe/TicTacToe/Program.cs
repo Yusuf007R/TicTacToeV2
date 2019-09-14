@@ -159,25 +159,33 @@ namespace TicTacToe1
 
         public static string BotCornerMove()
         {
-            
-            if (cas[1] == "1")
+            if (cas[5] == "5")
             {
-                return "1";
+                return "5";
             }
+            else
+            {
+
+                if (cas[1] == "1")
+                {
+                    return "1";
+                }
                 else if (cas[3] == "3")
                 {
-                return "3";
+                    return "3";
 
-            }
+                }
                 else if (cas[7] == "7")
                 {
-                return "7";
-            }
+                    return "7";
+                }
                 else if (cas[9] == "9")
                 {
-                return "9";
+                    return "9";
+                }
             }
             return null;
+
         }
      
         public static string BotOpenMove()
