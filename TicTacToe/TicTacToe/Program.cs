@@ -7,24 +7,35 @@ namespace TicTacToe1
     public class Program
     {
         //variables
-        public static string[] cas = { "0", "o", "2", "o", "4", "5", "6", "7", "8", "9" };
+        public static string[] cas = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
         public static string Turno, TurnoLetra, player1, player2, turn = "1", input;
         public static bool playing = true, win = false, cpumode;
         public static int Player1Wins, Player2Wins;
         public static bool allcorner;
-
-
+        public static string move;
+        public static int xd;
         //metodo
 
-            static void botmove()
+           public static void botmove()
         {
-            if (allcorner == false)
+            move = Loc("o"); //win
+            if (move == null)
             {
-                BotCornerMove(); 
-                    
-            }
-          
+                move = Loc("x"); //block
+                if (move == null)
+                {
+                    move = BotCornerMove();
+                    BotCornerMove();
 
+                    if (move == null)
+                    {
+                        move = BotOpenMove();
+                        BotOpenMove();
+                    }
+                }
+            }
+
+            xd = Convert.ToInt32(move);
 
         }
         static void Reset()
@@ -41,141 +52,135 @@ namespace TicTacToe1
             Console.Clear();
             Tablero();
         }
-      
 
-        static string lockforwinbot(string k)
+
+        public static string Loc(string casilla)
         {
             //horizontales
 
             //primera linea
-            if (cas[1] == "o" && cas[2] == cas[1] && cas[3] == "3")
+            if (cas[1] == casilla && cas[2] == casilla && cas[3] == "3")           
+                return "3";           
+            else if (cas[3] == casilla && cas[2] == casilla && cas[1] == "1")
+               return "1";
+            else if (cas[3] == casilla && cas[1] == casilla && cas[2] == "2")            
+                return "2";           
+            //segunda linea
+            else if (cas[4] == casilla && cas[5] == casilla && cas[6] == "6")           
+                return "6";
+            else if (cas[6] == casilla && cas[5] == casilla && cas[4] == "4")
+                return "4";        
+            else if (cas[4] == casilla && cas[6] == casilla && cas[5] == "5")           
+                return "5";
+            //tercera linea
+            else if (cas[7] == casilla && cas[8] == casilla && cas[9] == "9")
+                return "9";
+            else if (cas[9] == casilla && cas[8] == casilla && cas[7] == "7")
+                return "7";
+            else if (cas[9] == casilla && cas[7] == casilla && cas[8] == "8")
+                return "8";
+            //verticales
+            //primera linea
+
+            else if (cas[1] == casilla && cas[4] == casilla && cas[7] == "7")
             {
-                return "3";
+                return "7";
             }
-            if (cas[3] == "o" && cas[2] == cas[3] && cas[1] == "1")
+            else if (cas[7] == casilla && cas[4] == casilla && cas[1] == "1")
             {
                 return "1";
             }
-            if (cas[3] == "o" && cas[3] == cas[1] && cas[2] == "2")
-            {
-                return "2";
-            }
-            //segunda linea
-
-            else if (cas[4] == "o" && cas[5] == cas[4] && cas[6] == "6")
-            {
-                return "6";
-            }
-            else if (cas[6] == "o" && cas[5] == cas[6] && cas[4] == "4")
+            else if (cas[1] == casilla && cas[7] == casilla && cas[4] == "4")
             {
                 return "4";
             }
-            else if (cas[4] == "o" && cas[6] == cas[4] && cas[5] == "5")
+            //segunda linea
+
+            else if (cas[2] == casilla && cas[5] == casilla && cas[8] == "8")
+            {
+                return "8";
+            }
+            else if (cas[8] == casilla && cas[5] == casilla && cas[2] == "2")
+            {
+                return "2";
+            }
+            else if (cas[2] == casilla && cas[8] == casilla && cas[5] == "5")
             {
                 return "5";
             }
 
-
-
             //tercera linea
-            else if (cas[7] == "o" && cas[8] == cas[7] && cas[9] == "9")
+            else if (cas[3] == casilla && cas[6] == casilla && cas[9] == "9")
             {
                 return "9";
             }
-            else if (cas[9] == "o" && cas[8] == cas[9] && cas[7] == "7")
+            else if (cas[9] == casilla && cas[6] == casilla && cas[3] == "3")
             {
-                return "7";
+                return "3";
             }
-            else if (cas[9] == "o" && cas[9] == cas[7] && cas[8] == "8")
+            else if (cas[3] == casilla && cas[9] == casilla && cas[6] == "6")
             {
-                return "8";
-            }
-
-            //verticales
-            //primera linea
-
-            else if (cas[1] == "o" && cas[4] == cas[1] && cas[7] == "7")
-            {
-                return "7";
-            }
-            else if (cas[7] == "o" && cas[4] == cas[7] && cas[1] == "1")
-            {
-                return "1";
-            }
-            else if (cas[1] == "o" && cas[7] == cas[1] && cas[4] == "4")
-            {
-                return "4";
-            }
-            //segunda linea
-
-            else if (cas[2] == "o" && cas[5] == cas[2] && cas[8] == "8")
-            {
-                return "8";
-            }
-
-            //tercera linea
-            else if (cas[3] == "o" && cas[6] == cas[3] && cas[9] == "9")
-            {
-                return "9";
+                return "6";
             }
 
 
             //diagonales
             //primera
-            else if (cas[1] == "o" && cas[5] == cas[1] && cas[9] == "9")
+            else if (cas[1] == casilla && cas[5] == casilla && cas[9] == "9")
             {
                 return "9";
             }
+            else if (cas[9] == casilla && cas[5] == casilla && cas[1] == "1")
+            {
+                return "1";
+            }
+            else if (cas[1] == casilla && cas[9] == casilla && cas[5] == "5")
+            {
+                return "5";
+            }
 
             //segunda
-            else if (cas[3] == "o" && cas[5] == cas[3] && cas[7] == "7")
+            else if (cas[3] == casilla && cas[5] == casilla && cas[7] == "7")
             {
                 return "7";
             }
-            return k;
+            else if (cas[7] == casilla && cas[5] == casilla && cas[3] == "3")
+            {
+                return "3";
+            }
+            else if (cas[7] == casilla && cas[3] == casilla && cas[5] == "5")
+            {
+                return "5";
+            }
+
+            return null;
 
         }
 
-       public static void BotCornerMove()
+        public static string BotCornerMove()
         {
             
             if (cas[1] == "1")
             {
-                cas[1] = "o";
-                turn = "1";
-                Console.Clear();
-                Tablero();
+                return "1";
             }
                 else if (cas[3] == "3")
                 {
-                    cas[3] = "o";
-                    turn = "1";
-                    Console.Clear();
-                    Tablero();
-                    
-                }
+                return "3";
+
+            }
                 else if (cas[7] == "7")
                 {
-                    cas[7] = "o";
-                    turn = "1";
-                    Console.Clear();
-                    Tablero();
-                }
+                return "7";
+            }
                 else if (cas[9] == "9")
                 {
-                    cas[9] = "o";
-                    turn = "1";
-                    Console.Clear();
-                    Tablero();
-                }
-            else
-            {
-
-                bool allcorner = true;
+                return "9";
             }
+            return null;
         }
      
-        static void BotOpenMove()
+        public static string BotOpenMove()
         {
 
             for (int i = 1; i < cas.Length; i++)
@@ -183,13 +188,11 @@ namespace TicTacToe1
                 string n = Convert.ToString(i);
                 if (cas[i] == n)
                 {
-                    cas[i] = "o";
-                    turn = "1";
-                    Console.Clear();
-                    Tablero();
-                    break;
+                    return n;
                 }
+                
             }
+            return null;
         }
 
 
@@ -198,7 +201,6 @@ namespace TicTacToe1
         static void checkInput()
         {
             input = Console.ReadLine();
-
             if (playing == true && win == false)
             {
                 if (input != "1" && input != "2" && input != "3" && input != "4" && input != "5" && input != "6" && input != "7" && input != "8" && input != "9" && input != "quit" && input != "Quit")
@@ -228,23 +230,27 @@ namespace TicTacToe1
                     {
                         if (cpumode == true)
                         {
+                            
                             if (turn == "1")
                             {
                                 cas[inputnum] = "x";
                                 turn = "2"; ;
                                 Console.Clear();
                                 Tablero();
-                            }
-                            if (turn == "2")
-                            {
-                                {
-                                    
-                                    turn = "1";
-                                    Console.Clear();
-                                    Tablero();
+                                botmove();
 
+                                if (turn == "2")
+                                {
+                                    {
+                                        cas[xd] = "o";
+                                        turn = "1";
+                                        Console.Clear();
+                                        Tablero();
+
+                                    }
                                 }
                             }
+                           
                         }
                         else
                         {
@@ -322,7 +328,7 @@ namespace TicTacToe1
             {
                 return true;
             }
-            else if (cas[7] == cas[5] && cas[5] == cas[7])
+            else if (cas[7] == cas[5] && cas[5] == cas[3])
             {
                 return true;
             }
@@ -471,6 +477,7 @@ namespace TicTacToe1
 
                 Console.WriteLine("¿Cual es el nombre del Jugador Uno?");
                 player1 = Console.ReadLine();
+                player2 = "bot";
                 Console.WriteLine("Recuerda que para cerrar el juego debes poner \"quit\"");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Preciona una tecla para continuar.");
@@ -546,7 +553,7 @@ namespace TicTacToe1
             do
             {
                 checkInput();
-
+                
                 CheckWin();
                 win = CheckWin();
                 empate();
