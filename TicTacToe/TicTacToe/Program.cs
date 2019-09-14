@@ -2,10 +2,12 @@
 using System.Threading;
 
 
-namespace TicTacToe1
+namespace TicTacToe
 {
+
     public class Program
     {
+
         //variables
         public static string[] cas = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
         public static string Turno, TurnoLetra, player1, player2, turn = "1", input;
@@ -14,6 +16,7 @@ namespace TicTacToe1
         public static bool allcorner;
         public static string move;
         public static int xd;
+        
         //metodo
 
            public static void botmove()
@@ -83,19 +86,12 @@ namespace TicTacToe1
             //primera linea
 
             else if (cas[1] == casilla && cas[4] == casilla && cas[7] == "7")
-            {
                 return "7";
-            }
             else if (cas[7] == casilla && cas[4] == casilla && cas[1] == "1")
-            {
                 return "1";
-            }
             else if (cas[1] == casilla && cas[7] == casilla && cas[4] == "4")
-            {
                 return "4";
-            }
             //segunda linea
-
             else if (cas[2] == casilla && cas[5] == casilla && cas[8] == "8")
             {
                 return "8";
@@ -157,7 +153,7 @@ namespace TicTacToe1
 
         }
 
-        public static string BotCornerMove()
+        /* public static string BotCornerMove()
         {
             if (cas[5] == "5")
             {
@@ -186,8 +182,28 @@ namespace TicTacToe1
             }
             return null;
 
+        }*/
+
+        public static string BotCornerMove()
+        {
+            if (cas[5] == "5")
+            {
+                return "5";
+
+            }
+            else
+            {
+                for (int i = 1; i < 9; i += 2)
+                {
+                    string hola = Convert.ToString(i);
+                    if (cas[i] == hola)
+                    {
+                        return cas[i].ToString();
+                    }
+                }
+                return null;
+            }
         }
-     
         public static string BotOpenMove()
         {
 
@@ -242,15 +258,24 @@ namespace TicTacToe1
                             if (turn == "1")
                             {
                                 cas[inputnum] = "x";
+                                CheckWin();
+                                win = CheckWin();
+                                empate();
+                                Winner();
                                 turn = "2"; ;
                                 Console.Clear();
                                 Tablero();
                                 botmove();
+                                        
 
                                 if (turn == "2")
                                 {
                                     {
                                         cas[xd] = "o";
+                                        CheckWin();
+                                        win = CheckWin();
+                                        empate();
+                                        Winner();
                                         turn = "1";
                                         Console.Clear();
                                         Tablero();
@@ -355,7 +380,7 @@ namespace TicTacToe1
             {
                 Console.Clear();
                 Tablero();
-                if (turn == "1")
+                if (turn == "2")
                 {
                     asciitext(false);
                     Console.WriteLine("{0} a Ganado el Juego.", player2);
@@ -376,7 +401,7 @@ namespace TicTacToe1
         }
 
 
-        public static void cpucheck()
+         static void cpucheck()
         {
 
 
@@ -406,27 +431,11 @@ namespace TicTacToe1
         }
 
 
-        public static void cerrar()
+         static void cerrar()
         {
             Environment.Exit(0);
         }
-
-        /*  static void playmusica()
-           {
-               WindowsMediaPlayer musica = new WindowsMediaPlayer();
-               System.IO.File.WriteAllBytes(@"C:\Users\Public\xd.mp3", TicTacToeSimple.Properties.Resources.xd);
-               musica.URL = "C:\\Users\\Public\\xd.mp3";
-               musica.settings.autoStart = true;
-               musica.settings.setMode("loop", true);
-               musica.controls.play();
-               musica.settings.volume = 1;
-               Thread.Sleep(500);
-               musica.settings.volume = 5;
-               Thread.Sleep(500);
-               musica.settings.volume = 10;
-           }
-       */
-        public static void asciitext(bool text1)
+        static void asciitext(bool text1)
         {
             if (text1 == true)
             {
@@ -562,8 +571,7 @@ namespace TicTacToe1
             {
                 checkInput();
                 
-                CheckWin();
-                win = CheckWin();
+
                 empate();
                 Winner();
 
